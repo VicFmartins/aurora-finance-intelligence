@@ -1,0 +1,114 @@
+{
+  "total_clientes": 10000,
+  "total_transacoes": 267255,
+  "churn_rate_real": 0.2037,
+  "ticket_medio": 1652.28,
+  "volume_total": 441581018.45,
+  "top_categorias_consumo": [
+    {
+      "nome_categoria": "Investimentos",
+      "valor": 75291990.84
+    },
+    {
+      "nome_categoria": "Servicos Financeiros",
+      "valor": 73089611.76
+    },
+    {
+      "nome_categoria": "Saude",
+      "valor": 43297714.88
+    },
+    {
+      "nome_categoria": "Educacao",
+      "valor": 43055012.84
+    },
+    {
+      "nome_categoria": "Transporte",
+      "valor": 42978287.38
+    },
+    {
+      "nome_categoria": "Alimentacao",
+      "valor": 42948006.36
+    },
+    {
+      "nome_categoria": "Moradia",
+      "valor": 42611316.44
+    },
+    {
+      "nome_categoria": "Lazer",
+      "valor": 28569470.08
+    }
+  ],
+  "evolucao_mensal": [
+    {
+      "ano_mes": "2024-05",
+      "valor": 28311536.58
+    },
+    {
+      "ano_mes": "2024-06",
+      "valor": 27093494.57
+    },
+    {
+      "ano_mes": "2024-07",
+      "valor": 28230512.31
+    },
+    {
+      "ano_mes": "2024-08",
+      "valor": 28126447.06
+    },
+    {
+      "ano_mes": "2024-09",
+      "valor": 26842404.26
+    },
+    {
+      "ano_mes": "2024-10",
+      "valor": 27913156.88
+    },
+    {
+      "ano_mes": "2024-11",
+      "valor": 27045237.78
+    },
+    {
+      "ano_mes": "2024-12",
+      "valor": 28501746.02
+    },
+    {
+      "ano_mes": "2025-01",
+      "valor": 27800914.98
+    },
+    {
+      "ano_mes": "2025-02",
+      "valor": 25634653.91
+    },
+    {
+      "ano_mes": "2025-03",
+      "valor": 28378541.96
+    },
+    {
+      "ano_mes": "2025-04",
+      "valor": 27613893.49
+    }
+  ],
+  "distribuicao_estados": {
+    "Franca": 5014,
+    "Alemanha": 2509,
+    "Espanha": 2477
+  },
+  "data_source_type": "public_kaggle_churn_modelling_plus_synthetic_transactions",
+  "data_source_name": "Churn Modelling",
+  "data_source_platform": "Kaggle",
+  "data_source_file": "dados/raw/churn_modelling.csv",
+  "public_dataset_used": true,
+  "synthetic_transactions_used": true,
+  "data_source_note": "Base publica de churn bancario enriquecida com camada sintetica de transacoes financeiras.",
+  "origem_dado_counts": {
+    "public_kaggle_churn_modelling": 10000
+  },
+  "impacto_negocio": {
+    "headline": "A Aurora transforma sinais financeiros em priorizacao de retencao.",
+    "pontos": [
+      "antecipar clientes com maior risco de churn",
+      "usar Exited como target de churn do Kaggle",
+      "enriquecer a base publica com transacoes sinteticas reprodutiveis"
+    ]
+  }
+}

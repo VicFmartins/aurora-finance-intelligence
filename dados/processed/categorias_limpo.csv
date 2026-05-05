@@ -1,0 +1,11 @@
+categoria_id,nome_categoria,tipo_macro,descricao
+1,Alimentacao,Essencial,"Mercado, feira e refeicoes do dia a dia"
+2,Moradia,Essencial,"Aluguel, contas e manutencao residencial"
+3,Transporte,Essencial,"Combustivel, transporte publico e mobilidade"
+4,Saude,Essencial,"Farmacia, consultas e cuidados medicos"
+5,Educacao,Essencial,"Cursos, escola e desenvolvimento profissional"
+6,Lazer,Lazer,"Restaurantes, viagens e entretenimento"
+7,Assinaturas,Lazer,"Streaming, apps e servicos recorrentes"
+8,Investimentos,Investimento,"Aportes, poupanca e carteira financeira"
+9,Servicos Financeiros,Financeiro,"Tarifas, seguros e operacoes de credito"
+10,Outros,Outros,Despesas diversas e compras ocasionais

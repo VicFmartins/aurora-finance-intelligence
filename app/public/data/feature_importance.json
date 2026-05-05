@@ -1,0 +1,82 @@
+[
+  {
+    "feature": "numericas__idade",
+    "importance": 0.160506
+  },
+  {
+    "feature": "numericas__produtos_ativos",
+    "importance": 0.098164
+  },
+  {
+    "feature": "categoricas__perfil_risco_Conservador",
+    "importance": 0.091152
+  },
+  {
+    "feature": "numericas__score_credito",
+    "importance": 0.081439
+  },
+  {
+    "feature": "numericas__saldo_atual",
+    "importance": 0.041387
+  },
+  {
+    "feature": "categoricas__perfil_risco_Moderado",
+    "importance": 0.041335
+  },
+  {
+    "feature": "categoricas__perfil_risco_Arrojado",
+    "importance": 0.035566
+  },
+  {
+    "feature": "numericas__razao_saldo_renda",
+    "importance": 0.035529
+  },
+  {
+    "feature": "numericas__membro_ativo",
+    "importance": 0.024667
+  },
+  {
+    "feature": "categoricas__estado_Alemanha",
+    "importance": 0.022047
+  },
+  {
+    "feature": "numericas__pct_canal_digital",
+    "importance": 0.013909
+  },
+  {
+    "feature": "numericas__pct_essencial",
+    "importance": 0.013603
+  },
+  {
+    "feature": "numericas__pressao_financeira",
+    "importance": 0.013345
+  },
+  {
+    "feature": "numericas__pct_lazer",
+    "importance": 0.013275
+  },
+  {
+    "feature": "numericas__razao_gasto_renda",
+    "importance": 0.013196
+  },
+  {
+    "feature": "numericas__intensidade_credito",
+    "importance": 0.012102
+  },
+  {
+    "feature": "numericas__pct_financeiro",
+    "importance": 0.011928
+  },
+  {
+    "feature": "numericas__pct_investimento",
+    "importance": 0.011685
+  },
+  {
+    "feature": "numericas__valor_macro_lazer",
+    "importance": 0.011566
+  },
+  {
+    "feature": "numericas__meses_relacionamento",
+    "importance": 0.0115
+  }
+]

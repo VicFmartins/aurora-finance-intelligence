@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+*.pyc
+*.pyo
+*.pyd
+*.db
+node_modules/
+app/dist/
+dados/raw/churn_modelling.csv
+dados/raw/*.tmp.csv
+Thumbs.db
+Desktop.ini

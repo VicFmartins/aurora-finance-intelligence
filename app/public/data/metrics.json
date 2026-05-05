@@ -1,0 +1,23 @@
+{
+  "accuracy": 0.8765,
+  "precision": 0.66,
+  "recall": 0.8108,
+  "f1_score": 0.7277,
+  "roc_auc": 0.9288,
+  "baseline_churn_rate": 0.2037,
+  "threshold_used": 0.4,
+  "threshold_candidates": [
+    0.3,
+    0.4,
+    0.5
+  ],
+  "threshold_analysis_file": "threshold_analysis.csv",
+  "tradeoff_summary": "Churn é um problema de retenção em que falso negativo importa. Por isso, a Aurora compara múltiplos thresholds e recomenda um ponto de corte que preserva recall sem abrir mão demais da precision. Neste MVP, o foco principal é ranking de risco e priorização humana, não decisão automática.",
+  "recommended_threshold_reason": "O threshold 0.40 foi recomendado por apresentar o melhor equilíbrio prático entre recall e precision para retenção, usando uma pontuação que dá mais peso à captura de clientes em risco e um piso mínimo de precisão para evitar alertas excessivamente frágeis.",
+  "metric_notes": {
+    "precision": "Mostra a qualidade dos alertas gerados pelo modelo.",
+    "recall": "Mostra a capacidade de capturar clientes que poderiam sair.",
+    "false_negative_risk": "Em churn, deixar passar um cliente que sairia pode ser mais custoso do que investigar um alerta extra.",
+    "mvp_positioning": "O modelo apoia priorização e ranking de risco, não decisão automática."
+  }
+}
