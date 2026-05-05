@@ -187,8 +187,8 @@ Como defender o modelo:
 
 O guia pratico esta em:
 
-- [powerbi/README.md](C:\Users\vitor\OneDrive\Documentos\Playground\aurora-finance-intelligence\powerbi\README.md:1)
-- [docs/storytelling_powerbi.md](C:\Users\vitor\OneDrive\Documentos\Playground\aurora-finance-intelligence\docs\storytelling_powerbi.md:1)
+- [powerbi/README.md](powerbi/README.md)
+- [docs/storytelling_powerbi.md](docs/storytelling_powerbi.md)
 
 O `.pbix` pode ficar local ou entrar no repositorio se o tamanho permitir. Os screenshots devem entrar em `powerbi/screenshots/` como evidencia.
 
@@ -216,8 +216,8 @@ O `.pbix` pode ficar local ou entrar no repositorio se o tamanho permitir. Os sc
 
 ## Documentacao complementar
 
-- [docs/dataset_publico.md](C:\Users\vitor\OneDrive\Documentos\Playground\aurora-finance-intelligence\docs\dataset_publico.md:1)
-- [docs/dicionario_dados.md](C:\Users\vitor\OneDrive\Documentos\Playground\aurora-finance-intelligence\docs\dicionario_dados.md:1)
-- [docs/arquitetura_solucao.md](C:\Users\vitor\OneDrive\Documentos\Playground\aurora-finance-intelligence\docs\arquitetura_solucao.md:1)
-- [docs/storytelling_powerbi.md](C:\Users\vitor\OneDrive\Documentos\Playground\aurora-finance-intelligence\docs\storytelling_powerbi.md:1)
-- [docs/perguntas_banca.md](C:\Users\vitor\OneDrive\Documentos\Playground\aurora-finance-intelligence\docs\perguntas_banca.md:1)
+- [docs/dataset_publico.md](docs/dataset_publico.md)
+- [docs/dicionario_dados.md](docs/dicionario_dados.md)
+- [docs/arquitetura_solucao.md](docs/arquitetura_solucao.md)
+- [docs/storytelling_powerbi.md](docs/storytelling_powerbi.md)
+- [docs/perguntas_banca.md](docs/perguntas_banca.md)
