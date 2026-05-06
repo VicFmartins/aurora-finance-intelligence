@@ -122,6 +122,7 @@ Depois abra os notebooks em `notebooks/`:
 
 | Notebook | O que demonstra |
 |---|---|
+| `00_modelo_churn_passo_a_passo_professor.ipynb` | Versão didática única para apresentar ao professor: leitura da base, preparação, treino, avaliação, matriz de confusão e predições finais. |
 | `01_carregamento_e_limpeza.ipynb` | Carregamento do `Churn Modelling`, colunas originais, diagnóstico de nulos/duplicatas e padronização para o schema Aurora. |
 | `02_analise_exploratoria.ipynb` | Estatísticas descritivas, taxa de churn, distribuições, análise por estado, perfil de risco, categorias e evolução mensal. |
 | `03_sql_insights.ipynb` | SQLite em memória com consultas de validação, volume por estado, top categorias, saldo mensal, churn por perfil e clientes prioritários. |
