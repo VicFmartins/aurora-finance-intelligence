@@ -272,6 +272,22 @@ O `.pbix` pode ficar local ou entrar no repositorio se o tamanho permitir. Os sc
 
 O upload express do frontend e uma camada interativa complementar para demonstracao rapida. Ele nao substitui o Power BI oficial, que continua baseado nos CSVs e JSONs gerados pelo pipeline.
 
+### Preview do Power BI
+
+Os prints abaixo mostram o painel executivo montado no Power BI Desktop, com as 5 paginas previstas no roteiro de BI.
+
+| Visao Executiva | Consumo e Comportamento |
+|---|---|
+| <img src="powerbi/screenshots/01_visao_executiva.png" alt="Power BI - Visao Executiva" width="100%"> | <img src="powerbi/screenshots/02_consumo_comportamento.png" alt="Power BI - Consumo e Comportamento Financeiro" width="100%"> |
+
+| Churn e Retencao | Modelo ML |
+|---|---|
+| <img src="powerbi/screenshots/03_churn_retencao.png" alt="Power BI - Churn e Retencao" width="100%"> | <img src="powerbi/screenshots/04_modelo_ml.png" alt="Power BI - Modelo Machine Learning" width="100%"> |
+
+| Storytelling Executivo |
+|---|
+| <img src="powerbi/screenshots/05_storytelling_executivo.png" alt="Power BI - Storytelling Executivo" width="100%"> |
+
 ## Evidencias tecnicas
 
 - `dados/outputs/metricas_modelo.json`

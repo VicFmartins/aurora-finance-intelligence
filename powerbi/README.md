@@ -187,7 +187,23 @@ Veja checklist detalhado em `checklist_screenshots.md`.
 
 ---
 
-## 12. Checklist final
+## 12. Screenshots finais incluidos
+
+Os prints finais do painel ja estao salvos como evidencia visual da camada de BI:
+
+| Pagina | Screenshot |
+|--------|------------|
+| Visao Executiva | `powerbi/screenshots/01_visao_executiva.png` |
+| Consumo e Comportamento Financeiro | `powerbi/screenshots/02_consumo_comportamento.png` |
+| Churn e Retencao | `powerbi/screenshots/03_churn_retencao.png` |
+| Modelo ML | `powerbi/screenshots/04_modelo_ml.png` |
+| Storytelling Executivo | `powerbi/screenshots/05_storytelling_executivo.png` |
+
+Esses arquivos podem ser usados no README do GitHub, na apresentacao e como comprovacao de que o Power BI foi construido sobre os outputs do pipeline.
+
+---
+
+## 13. Checklist final
 
 - [ ] Tema Aurora aplicado (`tema_aurora.json`)
 - [ ] 8 fontes importadas (7 CSV + 1 JSON)
