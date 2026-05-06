@@ -108,6 +108,28 @@ A versão premium também possui uma rota opcional no frontend:
 Upload local CSV -> Análise Expressa no navegador -> Dashboard dinâmico client-side
 ```
 
+## Notebooks Do Processo
+
+Os notebooks são a evidência didática do processo pedido no hackathon. Eles mostram o caminho passo a passo, desde a leitura dos dados até a defesa dos resultados, antes da camada visual do app React.
+
+Execute primeiro:
+
+```powershell
+python -m src.pipeline
+```
+
+Depois abra os notebooks em `notebooks/`:
+
+| Notebook | O que demonstra |
+|---|---|
+| `01_carregamento_e_limpeza.ipynb` | Carregamento do `Churn Modelling`, colunas originais, diagnóstico de nulos/duplicatas e padronização para o schema Aurora. |
+| `02_analise_exploratoria.ipynb` | Estatísticas descritivas, taxa de churn, distribuições, análise por estado, perfil de risco, categorias e evolução mensal. |
+| `03_sql_insights.ipynb` | SQLite em memória com consultas de validação, volume por estado, top categorias, saldo mensal, churn por perfil e clientes prioritários. |
+| `04_modelo_churn.ipynb` | Comparação didática entre Logistic Regression, Decision Tree e Random Forest, com métricas, matriz de confusão, threshold e feature importance. |
+| `05_storytelling_resultados.ipynb` | Síntese dos outputs finais, conexão com Power BI e roteiro curto de apresentação: problema -> dados -> análise -> modelo -> dashboard -> impacto. |
+
+A aplicação React é um bônus de produto e apresentação. A entrega técnica principal continua documentada nos notebooks, SQL, Power BI e modelo em produção local.
+
 ## Como Executar O Pipeline
 
 ```powershell
