@@ -121,6 +121,52 @@ cd app
 npm run build
 ```
 
+## Evidencia de execucao local
+
+Os comandos abaixo foram validados localmente para demonstrar que o frontend roda sem backend e sem servicos pagos:
+
+```powershell
+cd app
+npm install
+# audited 183 packages
+# found 0 vulnerabilities
+
+npm run dev
+# VITE v6.4.2 ready
+# Local: http://localhost:5173/
+```
+
+## Preview do produto
+
+A Aurora tambem entrega uma interface React estatica com visual de produto SaaS premium. Os prints abaixo foram gerados localmente a partir do app e servem como evidencia visual para GitHub e banca.
+
+### Landing Page
+
+<img src="reports/screenshots/app/01_landing.png" alt="Landing Page da Aurora Finance Intelligence" width="100%">
+
+### Dashboard Executivo
+
+<img src="reports/screenshots/app/02_dashboard_executivo.png" alt="Dashboard Executivo da Aurora Finance Intelligence" width="100%">
+
+### Clientes em Risco
+
+<img src="reports/screenshots/app/04_clientes_em_risco.png" alt="Tabela de clientes em risco da Aurora Finance Intelligence" width="100%">
+
+### ML Insights
+
+<img src="reports/screenshots/app/03_ml_insights.png" alt="Pagina de ML Insights com metricas e feature importance" width="100%">
+
+### Analise Expressa
+
+<img src="reports/screenshots/app/07_analise_expressa.png" alt="Upload de planilha e analise expressa no navegador" width="100%">
+
+### Arquitetura e Power BI Guide
+
+<p>
+  <img src="reports/screenshots/app/05_arquitetura.png" alt="Pagina de arquitetura da Aurora Finance Intelligence" width="49%">
+  <img src="reports/screenshots/app/06_power_bi_guide.png" alt="Pagina Power BI Guide da Aurora Finance Intelligence" width="49%">
+</p>
+
 ## Como usar o Upload de Planilha
 
 No frontend, acesse a aba `Analise Expressa` ou clique em `Suba sua planilha` na Landing Page.
@@ -234,6 +280,7 @@ O upload express do frontend e uma camada interativa complementar para demonstra
 - `dados/outputs/threshold_analysis.csv`
 - `dados/outputs/classification_report.json`
 - `reports/figuras/`
+- `reports/screenshots/app/`
 - `sql/`
 - `notebooks/`
 - `app/public/data/`
