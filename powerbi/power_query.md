@@ -34,8 +34,8 @@ No Power Query, selecione a coluna e aplique o tipo correto via **Transformar �
 | `genero` | Texto | |
 | `cidade` | Texto | |
 | `estado` | Texto | |
-| `renda_mensal` | Número Decimal | Usar "Usando Localidade" → Português (Brasil) |
-| `saldo_atual` | Número Decimal | Usar "Usando Localidade" → Português (Brasil) |
+| `renda_mensal` | Número Decimal | Usar "Usando Localidade" → Inglês (EUA) |
+| `saldo_atual` | Número Decimal | Usar "Usando Localidade" → Inglês (EUA) |
 | `score_credito` | Número Inteiro | |
 | `tempo_relacionamento` | Número Inteiro | |
 | `produtos_ativos` | Número Inteiro | |
@@ -274,8 +274,8 @@ Antes de "Fechar e Aplicar", verifique:
 **Problema:** Datas aparecem em formato americano (MM/DD/YYYY)
 **Solução:** Selecionar coluna `data` → Alterar Tipo → Usando Localidade → selecionar "Inglês (EUA)" e tipo Data
 
-**Problema:** Valores decimais com vírgula não carregam como número
-**Solução:** Selecionar coluna → Alterar Tipo → Usando Localidade → Português (Brasil)
+**Problema:** Valores decimais com ponto (`.`) não carregam como número
+**Solução:** Selecionar coluna → Alterar Tipo → Usando Localidade → Inglês (EUA)
 
 **Problema:** JSON de métricas não filtra corretamente
 **Solução:** Verificar se a coluna `valor` contém listas ou records aninhados; expandir se necessário antes de filtrar

@@ -1,489 +1,453 @@
-# Medidas DAX — Aurora Finance Intelligence
+# Medidas DAX - Aurora Finance Intelligence
 
-> **Como usar:** No Power BI Desktop, vá em **Modelagem → Nova Medida** e cole cada fórmula abaixo.
-> Todas as medidas devem ser criadas em uma tabela chamada `_Medidas` (crie uma tabela vazia via **Inserir Dados** com apenas uma coluna chamada `Placeholder` e delete a coluna depois).
+> Como usar: no Power BI Desktop, va em **Modelagem > Nova medida** e cole cada formula abaixo.
+> Padrao adotado: nomes de medidas em minusculo, sem acento e com `_` separando as palavras.
 
----
+## Observacoes importantes
 
-## 1. Visão Geral
+- Os CSVs processados usam colunas em portugues, como `churn_flag`, `renda_mensal`, `saldo_atual` e `tempo_relacionamento`.
+- A coluna `transacoes_limpo[tipo]` usa os valores `Debito`, `Credito`, `Pix` e `Transferencia`.
+- A coluna `predicoes_churn[risco]` usa `Alto`, `Medio` e `Baixo`. O valor `Medio` fica sem acento.
+- A tabela `metricas_modelo` deve ser importada do JSON como duas colunas: `metrica` e `valor`.
 
-### Total Clientes
+## 1. Visao geral
+
+### total_clientes
 ```dax
-Total Clientes =
+total_clientes =
 COUNTROWS(clientes_limpo)
 ```
 
-### Total Transações
+### total_transacoes
 ```dax
-Total Transações =
+total_transacoes =
 COUNTROWS(transacoes_limpo)
 ```
 
-### Clientes Ativos (sem churn)
+### clientes_sem_churn
 ```dax
-Clientes Ativos =
+clientes_sem_churn =
 CALCULATE(
     COUNTROWS(clientes_limpo),
-    clientes_limpo[Exited] = 0
+    clientes_limpo[churn_flag] = 0
 )
 ```
 
-### Clientes com Churn
+### clientes_com_churn
 ```dax
-Clientes com Churn =
+clientes_com_churn =
 CALCULATE(
     COUNTROWS(clientes_limpo),
-    clientes_limpo[Exited] = 1
+    clientes_limpo[churn_flag] = 1
 )
 ```
 
-### Média de Renda Mensal
+### media_renda_mensal
 ```dax
-Média de Renda Mensal =
-AVERAGE(clientes_limpo[EstimatedSalary])
+media_renda_mensal =
+AVERAGE(clientes_limpo[renda_mensal])
 ```
 
-### Média de Saldo Atual
+### media_saldo_atual
 ```dax
-Média de Saldo Atual =
-AVERAGE(clientes_limpo[Balance])
+media_saldo_atual =
+AVERAGE(clientes_limpo[saldo_atual])
 ```
 
-### Média de Idade
+### media_idade
 ```dax
-Média de Idade =
-AVERAGE(clientes_limpo[Age])
+media_idade =
+AVERAGE(clientes_limpo[idade])
 ```
 
-### Média de Tenure (Anos de Relacionamento)
+### media_tempo_relacionamento
 ```dax
-Média Tenure =
-AVERAGE(clientes_limpo[Tenure])
+media_tempo_relacionamento =
+AVERAGE(clientes_limpo[tempo_relacionamento])
 ```
-
----
 
 ## 2. Financeiro
 
-### Volume Financeiro Total
+### volume_financeiro
 ```dax
-Volume Financeiro =
+volume_financeiro =
 SUM(transacoes_limpo[valor])
 ```
 
-### Total Gastos (Débitos)
+### total_debito
 ```dax
-Total Gastos =
+total_debito =
 CALCULATE(
     SUM(transacoes_limpo[valor]),
-    transacoes_limpo[tipo] = "debito"
+    transacoes_limpo[tipo] = "Debito"
 )
 ```
 
-### Total Créditos
+### total_credito
 ```dax
-Total Créditos =
+total_credito =
 CALCULATE(
     SUM(transacoes_limpo[valor]),
-    transacoes_limpo[tipo] = "credito"
+    transacoes_limpo[tipo] = "Credito"
 )
 ```
 
-### Saldo Líquido
+### saldo_liquido
 ```dax
-Saldo Líquido =
-[Total Créditos] - [Total Gastos]
+saldo_liquido =
+[total_credito] - [total_debito]
 ```
 
-### Ticket Médio por Transação
+### ticket_medio
 ```dax
-Ticket Médio =
+ticket_medio =
 DIVIDE(
-    [Volume Financeiro],
-    [Total Transações],
+    [volume_financeiro],
+    [total_transacoes],
     0
 )
 ```
 
-### Ticket Médio por Cliente
+### ticket_medio_por_cliente
 ```dax
-Ticket Médio por Cliente =
+ticket_medio_por_cliente =
 DIVIDE(
-    [Volume Financeiro],
-    [Total Clientes],
+    [volume_financeiro],
+    [total_clientes],
     0
 )
 ```
 
-### Média de Saldo dos Clientes
+### media_saldo_clientes
 ```dax
-Média Saldo Clientes =
-AVERAGE(clientes_limpo[Balance])
+media_saldo_clientes =
+AVERAGE(clientes_limpo[saldo_atual])
 ```
 
-### Produtos por Cliente (Média)
+### media_produtos_por_cliente
 ```dax
-Média Produtos por Cliente =
-AVERAGE(clientes_limpo[NumOfProducts])
+media_produtos_por_cliente =
+AVERAGE(clientes_limpo[produtos_ativos])
 ```
 
-### % Clientes com Cartão de Crédito
+### percentual_clientes_com_cartao
 ```dax
-% Clientes com Cartão =
+percentual_clientes_com_cartao =
 DIVIDE(
-    CALCULATE(COUNTROWS(clientes_limpo), clientes_limpo[HasCrCard] = 1),
-    [Total Clientes],
-    0
-)
-```
-
-### % Clientes Membros Ativos
-```dax
-% Membros Ativos =
-DIVIDE(
-    CALCULATE(COUNTROWS(clientes_limpo), clientes_limpo[IsActiveMember] = 1),
-    [Total Clientes],
-    0
-)
-```
-
----
-
-## 3. Churn
-
-### Taxa de Churn
-```dax
-Taxa Churn =
-DIVIDE(
-    [Clientes com Churn],
-    [Total Clientes],
-    0
-)
-```
-
-### Taxa de Churn % (Formatada)
-```dax
-Taxa Churn % =
-FORMAT([Taxa Churn], "0.00%")
-```
-
-### Churn por Geografia
-```dax
-Churn por País =
-CALCULATE(
-    DIVIDE(
-        COUNTROWS(FILTER(clientes_limpo, clientes_limpo[Exited] = 1)),
+    CALCULATE(
         COUNTROWS(clientes_limpo),
-        0
-    )
+        clientes_limpo[tem_cartao_credito] = 1
+    ),
+    [total_clientes],
+    0
 )
 ```
 
-### Probabilidade Média de Churn
+### percentual_membros_ativos
 ```dax
-Probabilidade Média Churn =
+percentual_membros_ativos =
+DIVIDE(
+    CALCULATE(
+        COUNTROWS(clientes_limpo),
+        clientes_limpo[membro_ativo] = 1
+    ),
+    [total_clientes],
+    0
+)
+```
+
+### meta_saldo
+```dax
+meta_saldo =
+0
+```
+
+> Ajuste `meta_saldo` se a banca pedir uma meta operacional. Para a demo, manter zero deixa claro que o indicador mede saldo liquido observado.
+
+### variacao_saldo
+```dax
+variacao_saldo =
+[saldo_liquido] - [meta_saldo]
+```
+
+## 3. Churn e risco
+
+### taxa_churn
+```dax
+taxa_churn =
+DIVIDE(
+    [clientes_com_churn],
+    [total_clientes],
+    0
+)
+```
+
+### churn_por_pais
+```dax
+churn_por_pais =
+DIVIDE(
+    CALCULATE(
+        COUNTROWS(clientes_limpo),
+        clientes_limpo[churn_flag] = 1
+    ),
+    COUNTROWS(clientes_limpo),
+    0
+)
+```
+
+### probabilidade_media_churn
+```dax
+probabilidade_media_churn =
 AVERAGE(predicoes_churn[prob_churn])
 ```
 
-### Probabilidade Média Churn % (Formatada)
+### clientes_churn_previsto
 ```dax
-Prob Média Churn % =
-FORMAT([Probabilidade Média Churn], "0.00%")
-```
-
-### Clientes com Churn Previsto
-```dax
-Clientes Churn Previsto =
+clientes_churn_previsto =
 CALCULATE(
     COUNTROWS(predicoes_churn),
-    predicoes_churn[churn_flag] = 1
+    predicoes_churn[predicao_churn] = 1
 )
 ```
 
-### Taxa Churn Previsto
+### taxa_churn_previsto
 ```dax
-Taxa Churn Previsto =
+taxa_churn_previsto =
 DIVIDE(
-    [Clientes Churn Previsto],
-    [Total Clientes],
+    [clientes_churn_previsto],
+    [total_clientes],
     0
 )
 ```
 
----
-
-## 4. Risco
-
-### Clientes Alto Risco
+### clientes_alto_risco
 ```dax
-Clientes Alto Risco =
+clientes_alto_risco =
 CALCULATE(
     COUNTROWS(predicoes_churn),
     predicoes_churn[risco] = "Alto"
 )
 ```
 
-### Clientes Médio Risco
+### clientes_medio_risco
 ```dax
-Clientes Médio Risco =
+clientes_medio_risco =
 CALCULATE(
     COUNTROWS(predicoes_churn),
-    predicoes_churn[risco] = "Médio"
+    predicoes_churn[risco] = "Medio"
 )
 ```
 
-### Clientes Baixo Risco
+### clientes_baixo_risco
 ```dax
-Clientes Baixo Risco =
+clientes_baixo_risco =
 CALCULATE(
     COUNTROWS(predicoes_churn),
     predicoes_churn[risco] = "Baixo"
 )
 ```
 
-### % Clientes Alto Risco
+### percentual_clientes_alto_risco
 ```dax
-% Clientes Alto Risco =
+percentual_clientes_alto_risco =
 DIVIDE(
-    [Clientes Alto Risco],
-    [Total Clientes],
+    [clientes_alto_risco],
+    [total_clientes],
     0
 )
 ```
 
-### % Clientes Médio Risco
+## 4. Modelo ML
+
+### roc_auc
 ```dax
-% Clientes Médio Risco =
-DIVIDE(
-    [Clientes Médio Risco],
-    [Total Clientes],
-    0
-)
-```
-
-### % Clientes Baixo Risco
-```dax
-% Clientes Baixo Risco =
-DIVIDE(
-    [Clientes Baixo Risco],
-    [Total Clientes],
-    0
-)
-```
-
-### Risco Formatado (Para Cards)
-```dax
-Alto Risco Formatado =
-FORMAT([Clientes Alto Risco], "#,##0") & " clientes"
-```
-
----
-
-## 5. Modelo ML
-
-### ROC-AUC
-```dax
-ROC-AUC =
-MAXX(
-    FILTER(metricas_modelo, metricas_modelo[metrica] = "roc_auc"),
-    metricas_modelo[valor]
-)
-```
-
-> **Alternativa:** Se `metricas_modelo` for importada como uma tabela simples de chave-valor:
-```dax
-ROC-AUC =
+roc_auc =
 CALCULATE(
     MAX(metricas_modelo[valor]),
     metricas_modelo[metrica] = "roc_auc"
 )
 ```
 
-### Precision
+### precision_modelo
 ```dax
-Precision =
+precision_modelo =
 CALCULATE(
     MAX(metricas_modelo[valor]),
     metricas_modelo[metrica] = "precision"
 )
 ```
 
-### Recall
+### recall_modelo
 ```dax
-Recall =
+recall_modelo =
 CALCULATE(
     MAX(metricas_modelo[valor]),
     metricas_modelo[metrica] = "recall"
 )
 ```
 
-### F1 Score
+### f1_score_modelo
 ```dax
-F1 Score =
+f1_score_modelo =
 CALCULATE(
     MAX(metricas_modelo[valor]),
     metricas_modelo[metrica] = "f1_score"
 )
 ```
 
-### Accuracy
+### accuracy_modelo
 ```dax
-Accuracy =
+accuracy_modelo =
 CALCULATE(
     MAX(metricas_modelo[valor]),
     metricas_modelo[metrica] = "accuracy"
 )
 ```
 
-### Threshold Usado
+### baseline_churn_rate
 ```dax
-Threshold Usado =
+baseline_churn_rate =
 CALCULATE(
     MAX(metricas_modelo[valor]),
-    metricas_modelo[metrica] = "threshold"
+    metricas_modelo[metrica] = "baseline_churn_rate"
 )
 ```
 
-> **Nota sobre metricas_modelo:** O arquivo `metricas_modelo.json` deve ser importado via Power Query e transformado em tabela de duas colunas: `metrica` (texto) e `valor` (decimal). Veja `power_query.md` para instruções detalhadas.
-
-### Feature Importance Máxima
+### threshold_usado
 ```dax
-Top Feature Importância =
+threshold_usado =
+CALCULATE(
+    MAX(metricas_modelo[valor]),
+    metricas_modelo[metrica] = "threshold_used"
+)
+```
+
+### top_feature_importancia
+```dax
+top_feature_importancia =
 MAXX(
-    TOPN(1, feature_importance, feature_importance[importance], DESC),
+    TOPN(
+        1,
+        feature_importance,
+        feature_importance[importance],
+        DESC
+    ),
     feature_importance[feature]
 )
 ```
 
-### Score Médio do Modelo (Resumo)
+### resumo_modelo
 ```dax
-Score Resumo Modelo =
-"AUC: " & FORMAT([ROC-AUC], "0.000") &
-" | F1: " & FORMAT([F1 Score], "0.000") &
-" | Recall: " & FORMAT([Recall], "0.000")
+resumo_modelo =
+"AUC: " & FORMAT([roc_auc], "0.000") &
+" | F1: " & FORMAT([f1_score_modelo], "0.000") &
+" | Recall: " & FORMAT([recall_modelo], "0.000")
 ```
 
----
+## 5. Consumo e comportamento
 
-## 6. Consumo (Transações)
-
-### Top Categoria por Gasto
+### top_categoria_por_gasto
 ```dax
-Top Categoria por Gasto =
-CALCULATE(
-    MAXX(
-        TOPN(1,
-            SUMMARIZE(
-                transacoes_limpo,
-                categorias_limpo[nome_categoria],
-                "GastoCategoria", SUM(transacoes_limpo[valor])
-            ),
-            [GastoCategoria], DESC
+top_categoria_por_gasto =
+MAXX(
+    TOPN(
+        1,
+        SUMMARIZE(
+            transacoes_limpo,
+            categorias_limpo[nome_categoria],
+            "gasto_categoria", SUM(transacoes_limpo[valor])
         ),
-        categorias_limpo[nome_categoria]
-    )
+        [gasto_categoria],
+        DESC
+    ),
+    categorias_limpo[nome_categoria]
 )
 ```
 
-### Gasto Médio por Categoria
+### gasto_medio_por_categoria
 ```dax
-Gasto Médio por Categoria =
+gasto_medio_por_categoria =
 AVERAGEX(
     VALUES(categorias_limpo[nome_categoria]),
     CALCULATE(SUM(transacoes_limpo[valor]))
 )
 ```
 
-### Transações por Cliente (Média)
+### transacoes_por_cliente
 ```dax
-Transações por Cliente =
+transacoes_por_cliente =
 DIVIDE(
-    [Total Transações],
-    [Total Clientes],
+    [total_transacoes],
+    [total_clientes],
     0
 )
 ```
 
-### Volume por Canal
+### volume_por_canal
 ```dax
-Volume por Canal =
+volume_por_canal =
 CALCULATE(
     SUM(transacoes_limpo[valor]),
     ALLEXCEPT(transacoes_limpo, transacoes_limpo[canal])
 )
 ```
 
-### Crescimento MoM (Mês a Mês)
+### crescimento_mom
 ```dax
-Crescimento MoM =
-VAR VolumeAtual = [Volume Financeiro]
-VAR VolumeMesAnterior =
+crescimento_mom =
+VAR volume_atual = [volume_financeiro]
+VAR volume_mes_anterior =
     CALCULATE(
-        [Volume Financeiro],
+        [volume_financeiro],
         PREVIOUSMONTH(transacoes_limpo[data])
     )
 RETURN
 DIVIDE(
-    VolumeAtual - VolumeMesAnterior,
-    VolumeMesAnterior,
+    volume_atual - volume_mes_anterior,
+    volume_mes_anterior,
     0
 )
 ```
 
-### Evolução Acumulada (YTD)
+### volume_ytd
 ```dax
-Volume YTD =
+volume_ytd =
 CALCULATE(
-    [Volume Financeiro],
+    [volume_financeiro],
     DATESYTD(transacoes_limpo[data])
 )
 ```
 
----
+## 6. Medidas de apoio para cards
 
-## 7. Medidas Auxiliares (KPI Coloridos)
-
-### Semáforo Churn (Texto)
+### status_churn
 ```dax
-Status Churn =
+status_churn =
 SWITCH(
     TRUE(),
-    [Taxa Churn] > 0.25, "🔴 ALTO",
-    [Taxa Churn] > 0.15, "🟡 MÉDIO",
-    "🟢 BAIXO"
+    [taxa_churn] > 0.25, "ALTO",
+    [taxa_churn] > 0.15, "MEDIO",
+    "BAIXO"
 )
 ```
 
-### Semáforo ROC-AUC
+### status_modelo
 ```dax
-Status Modelo =
+status_modelo =
 SWITCH(
     TRUE(),
-    [ROC-AUC] >= 0.85, "🟢 EXCELENTE",
-    [ROC-AUC] >= 0.75, "🟡 BOM",
-    "🔴 ABAIXO DO ESPERADO"
+    [roc_auc] >= 0.85, "EXCELENTE",
+    [roc_auc] >= 0.75, "BOM",
+    "ABAIXO DO ESPERADO"
 )
 ```
 
-### Variação Saldo vs Meta
-```dax
-Variação Saldo =
-[Saldo Líquido] - 0  -- substitua 0 pela meta definida
-```
+## Formatos sugeridos
 
----
+| Medida | Formato no Power BI |
+| --- | --- |
+| `taxa_churn`, `probabilidade_media_churn`, `precision_modelo`, `recall_modelo`, `baseline_churn_rate` | Porcentagem |
+| `roc_auc`, `f1_score_modelo`, `accuracy_modelo`, `threshold_usado` | Numero decimal |
+| `volume_financeiro`, `saldo_liquido`, `ticket_medio`, `media_renda_mensal` | Moeda |
+| `total_clientes`, `total_transacoes`, `clientes_alto_risco` | Numero inteiro |
 
-## Dicas de Formatação
-
-| Medida | Formato Sugerido |
-|--------|-----------------|
-| Taxa Churn | Porcentagem (0.00%) |
-| ROC-AUC, Precision, Recall, F1 | Número Decimal (0.000) |
-| Volume Financeiro, Saldo | Moeda (R$ #,##0.00) |
-| Total Clientes, Transações | Inteiro (#,##0) |
-| Probabilidade Churn | Porcentagem (0.0%) |
-| Ticket Médio | Moeda (R$ #,##0.00) |
-
----
-
-*Gerado automaticamente para o projeto Aurora Finance Intelligence*

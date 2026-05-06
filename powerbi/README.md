@@ -143,13 +143,13 @@ Detalhes completos em `modelagem_dados.md`.
 ## 9. Principais medidas DAX
 
 ```dax
-Total Clientes = COUNTROWS(clientes_limpo)
-Taxa Churn = DIVIDE([Clientes com Churn], [Total Clientes], 0)
-Volume Financeiro = SUM(transacoes_limpo[valor])
-Ticket Médio = DIVIDE([Volume Financeiro], [Total Transações], 0)
-Clientes Alto Risco = CALCULATE(COUNTROWS(predicoes_churn), predicoes_churn[risco] = "Alto")
-Probabilidade Média Churn = AVERAGE(predicoes_churn[prob_churn])
-ROC-AUC = CALCULATE(MAX(metricas_modelo[valor]), metricas_modelo[metrica] = "roc_auc")
+total_clientes = COUNTROWS(clientes_limpo)
+taxa_churn = DIVIDE([clientes_com_churn], [total_clientes], 0)
+volume_financeiro = SUM(transacoes_limpo[valor])
+ticket_medio = DIVIDE([volume_financeiro], [total_transacoes], 0)
+clientes_alto_risco = CALCULATE(COUNTROWS(predicoes_churn), predicoes_churn[risco] = "Alto")
+probabilidade_media_churn = AVERAGE(predicoes_churn[prob_churn])
+roc_auc = CALCULATE(MAX(metricas_modelo[valor]), metricas_modelo[metrica] = "roc_auc")
 ```
 
 Ver todas as medidas em `medidas_dax.md`.

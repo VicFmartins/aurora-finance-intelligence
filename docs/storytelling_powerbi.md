@@ -25,9 +25,9 @@ Na apresentacao, deixe claro:
 
 ## Relacionamentos
 
-- `clientes.cliente_id` com `transacoes.cliente_id`
-- `categorias.categoria_id` com `transacoes.categoria_id`
-- `clientes.cliente_id` com `predicoes_churn.cliente_id`
+- `clientes_limpo.cliente_id` com `transacoes_limpo.cliente_id`
+- `categorias_limpo.categoria_id` com `transacoes_limpo.categoria_id`
+- `clientes_limpo.cliente_id` com `predicoes_churn.cliente_id`
 
 ## Paginas do dashboard
 
@@ -40,41 +40,50 @@ Na apresentacao, deixe claro:
 ## Medidas DAX
 
 ```DAX
-Total Clientes =
-DISTINCTCOUNT(clientes[cliente_id])
+total_clientes =
+COUNTROWS(clientes_limpo)
 
-Total Transações =
-COUNTROWS(transacoes)
+total_transacoes =
+COUNTROWS(transacoes_limpo)
 
-Total Gastos =
+clientes_com_churn =
 CALCULATE(
-    SUM(transacoes[valor]),
-    transacoes[tipo] <> "Credito"
+    COUNTROWS(clientes_limpo),
+    clientes_limpo[churn_flag] = 1
 )
 
-Ticket Médio =
-DIVIDE([Total Gastos], [Total Transações])
+volume_financeiro =
+SUM(transacoes_limpo[valor])
 
-Taxa Churn =
-AVERAGE(clientes[churn_flag])
+total_debito =
+CALCULATE(
+    SUM(transacoes_limpo[valor]),
+    transacoes_limpo[tipo] = "Debito"
+)
 
-Clientes Alto Risco =
+total_credito =
+CALCULATE(
+    SUM(transacoes_limpo[valor]),
+    transacoes_limpo[tipo] = "Credito"
+)
+
+ticket_medio =
+DIVIDE([volume_financeiro], [total_transacoes], 0)
+
+taxa_churn =
+DIVIDE([clientes_com_churn], [total_clientes], 0)
+
+clientes_alto_risco =
 CALCULATE(
     DISTINCTCOUNT(predicoes_churn[cliente_id]),
     predicoes_churn[risco] = "Alto"
 )
 
-Probabilidade Média Churn =
+probabilidade_media_churn =
 AVERAGE(predicoes_churn[prob_churn])
 
-Volume Financeiro =
-SUM(transacoes[valor])
-
-Saldo Líquido =
-SUMX(
-    transacoes,
-    IF(transacoes[tipo] = "Credito", transacoes[valor], -transacoes[valor])
-)
+saldo_liquido =
+[total_credito] - [total_debito]
 ```
 
 ## Mensagem que deve aparecer no painel
