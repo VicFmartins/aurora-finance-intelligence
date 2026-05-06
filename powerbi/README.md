@@ -202,6 +202,19 @@ Veja checklist detalhado em `checklist_screenshots.md`.
 
 ---
 
+## Upload Express no frontend
+
+A aba `Analise Expressa` do app React permite upload local de CSV e gera uma leitura rapida de risco diretamente no navegador. Essa camada e complementar:
+
+- nao substitui o Power BI oficial
+- nao altera os CSVs gerados pelo pipeline
+- nao envia planilhas para servidor
+- ajuda a demonstrar a Aurora com uma base do avaliador ou uma base de teste
+
+Para a entrega de BI, continue usando os arquivos listados neste guia e o modelo Power BI salvo em `powerbi/aurora_finance_intelligence.pbix`.
+
+---
+
 ## Referências
 
 | Arquivo | Conteúdo |

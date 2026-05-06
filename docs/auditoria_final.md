@@ -1,6 +1,69 @@
-# Auditoria Final
+# Auditoria Técnica — Aurora Finance Intelligence
+**Data:** 05 de Maio de 2026 | **Auditora:** Vitoria Freitas
 
-## 1. Panorama geral do projeto
+> Esta auditoria substitui a versão anterior. Todos os bugs abaixo foram **corrigidos diretamente nos arquivos** durante esta sessão.
+
+---
+
+## BUGS CORRIGIDOS NESTA SESSÃO
+
+### 🔴 BUG 1 — Colunas erradas no DAX (`medidas_dax.md`) — CRÍTICO
+DAX referenciava colunas do Kaggle (inglês), mas o CSV processado usa português.
+Medidas afetadas: Clientes Ativos, Clientes com Churn, Renda Média, Saldo Médio, Idade, Tenure, Produtos, Cartão, Membro Ativo, Churn por País.
+
+| DAX usava (ERRADO) | Coluna real no CSV |
+|---|---|
+| `clientes_limpo[Exited]` | `clientes_limpo[churn_flag]` |
+| `clientes_limpo[Balance]` | `clientes_limpo[saldo_atual]` |
+| `clientes_limpo[EstimatedSalary]` | `clientes_limpo[renda_mensal]` |
+| `clientes_limpo[Age]` | `clientes_limpo[idade]` |
+| `clientes_limpo[Tenure]` | `clientes_limpo[tempo_relacionamento]` |
+| `clientes_limpo[NumOfProducts]` | `clientes_limpo[produtos_ativos]` |
+| `clientes_limpo[HasCrCard]` | `clientes_limpo[tem_cartao_credito]` |
+| `clientes_limpo[IsActiveMember]` | `clientes_limpo[membro_ativo]` |
+| `predicoes_churn[churn_flag]` | `predicoes_churn[predicao_churn]` |
+| `metrica = "threshold"` | `metrica = "threshold_used"` |
+
+**Status:** ✅ Corrigido em `powerbi/medidas_dax.md`
+
+---
+
+### 🔴 BUG 2 — "Médio" vs "Medio" no filtro DAX — CRÍTICO
+CSV tem `"Medio"` (sem acento); DAX filtrava `"Médio"` (com acento).
+Resultado: `Clientes Médio Risco` retornava 0 — 1.080 clientes sumiam do dashboard.
+**Status:** ✅ Corrigido em `powerbi/medidas_dax.md`
+
+---
+
+### 🔴 BUG 3 — Case sensitivity em tipo de transação — CRÍTICO
+CSV tem `"Debito"` / `"Credito"` (inicial maiúscula); DAX filtrava `"debito"` / `"credito"`.
+Resultado: `Total Gastos` e `Total Créditos` retornavam 0; `Saldo Líquido` calculado incorretamente.
+**Status:** ✅ Corrigido em `powerbi/medidas_dax.md`
+
+---
+
+### 🟡 BUG 4 — Estrutura de tabelas errada em `modelagem_dados.md` — MODERADO
+Tabela `clientes_limpo` documentada com colunas do Kaggle. `predicoes_churn` com campo errado (`churn_flag` em vez de `predicao_churn`), acento errado em `"Médio"`, e colunas faltando.
+**Status:** ✅ Corrigido em `powerbi/modelagem_dados.md`
+
+---
+
+### 🟡 GAP — Análise probabilística ausente no notebook — REQUISITO DO EDITAL
+Edital exige: *"Uso de fundamentos de probabilidade para identificar produtos de maior destaque, justificando-os com análises estatísticas."*
+Notebook `02_limpeza_eda.ipynb` não tinha nenhuma célula com p-valor ou teste de hipótese.
+
+Adicionada seção completa com:
+- P(Churn | Perfil de Risco) com risco relativo vs baseline
+- P(Churn | Estado) com risco relativo por país
+- P(Churn | Membro Ativo) com ratio de risco
+- Teste Qui-Quadrado: χ² = 851.79 | p-valor ≈ 0.000 ✅ significativo
+- Correlação de Pearson com p-valor para cada variável numérica
+
+**Status:** ✅ Corrigido em `notebooks/02_limpeza_eda.ipynb`
+
+---
+
+## PANORAMA GERAL DO PROJETO (versão anterior desta auditoria)
 
 Aurora Finance Intelligence esta consistente como projeto de hackathon de dados com ambicao de produto. O repositorio entrega:
 

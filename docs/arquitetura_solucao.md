@@ -16,6 +16,9 @@ O projeto trabalha em dois modos:
 
 Essa decisao acontece dentro do proprio pipeline, sem mudar o comando `python -m src.pipeline`.
 
+3. **modo express no frontend**
+   Permite upload local de um CSV de clientes na aba `Analise Expressa`. Esse modo roda somente no navegador, nao usa backend, nao grava em banco e nao substitui o pipeline oficial.
+
 ## Camada sintetica de transacoes
 
 Mesmo usando o `Churn Modelling`, a Aurora continua gerando transacoes sinteticas porque o dataset publico nao possui:
@@ -49,6 +52,11 @@ dados/raw/churn_modelling.csv (opcional)
     -> Random Forest + threshold analysis
     -> CSVs, JSONs e model.pkl
     -> Power BI e app React estatico
+
+Upload local CSV (opcional)
+    -> normalizacao de colunas no navegador
+    -> score express demonstrativo
+    -> dashboard dinamico client-side
 ```
 
 ## Decisoes importantes
@@ -58,6 +66,8 @@ dados/raw/churn_modelling.csv (opcional)
 - `Geography` e usada como localizacao
 - `Surname` e usado como nome do cliente no schema Aurora
 - `CustomerId` e preservado em `customer_id_original`
+- no upload express, `EstimatedSalary` tambem e tratado como valor anual e convertido para renda mensal quando essa coluna aparece
+- o score express do frontend e apenas demonstrativo; o modelo oficial continua sendo gerado pelo pipeline Python
 
 ## Por que essa arquitetura e boa para banca
 
@@ -66,3 +76,4 @@ dados/raw/churn_modelling.csv (opcional)
 - preserva SQL, EDA, ML e BI no mesmo projeto
 - evita backend cloud obrigatorio
 - continua AWS-ready com custo baixo
+- adiciona uma experiencia interativa viavel em deploy estatico gratuito

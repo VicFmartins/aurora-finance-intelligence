@@ -99,17 +99,23 @@ transacoes_limpo ◄──── [cliente_id] ──── clientes_limpo ──
 | Coluna | Tipo PBI | Descrição |
 |--------|----------|-----------|
 | `cliente_id` | Texto | Identificador único do cliente |
-| `CreditScore` | Número Inteiro | Score de crédito |
-| `Geography` | Texto | País/região do cliente |
-| `Gender` | Texto | Gênero |
-| `Age` | Número Inteiro | Idade |
-| `Tenure` | Número Inteiro | Anos como cliente |
-| `Balance` | Número Decimal | Saldo atual |
-| `NumOfProducts` | Número Inteiro | Qtd de produtos |
-| `HasCrCard` | Número Inteiro | Possui cartão (0/1) |
-| `IsActiveMember` | Número Inteiro | Membro ativo (0/1) |
-| `EstimatedSalary` | Número Decimal | Renda estimada |
-| `Exited` | Número Inteiro | Churn real (0/1) |
+| `customer_id_original` | Número Inteiro | ID original do Kaggle |
+| `nome` | Texto | Nome do cliente |
+| `idade` | Número Inteiro | Idade |
+| `genero` | Texto | Gênero |
+| `cidade` | Texto | Cidade |
+| `estado` | Texto | País/região (França, Alemanha, Espanha) |
+| `renda_mensal` | Número Decimal | Renda estimada (R$) |
+| `saldo_atual` | Número Decimal | Saldo atual (R$) |
+| `score_credito` | Número Inteiro | Score de crédito |
+| `tempo_relacionamento` | Número Inteiro | Anos como cliente |
+| `produtos_ativos` | Número Inteiro | Qtd de produtos |
+| `tem_cartao_credito` | Número Inteiro | Possui cartão (0/1) |
+| `membro_ativo` | Número Inteiro | Membro ativo (0/1) |
+| `perfil_risco` | Texto | Conservador, Moderado, Arrojado |
+| `data_cadastro` | Data | Data de cadastro |
+| `churn_flag` | Número Inteiro | Churn real (0/1) |
+| `origem_dado` | Texto | Fonte do dado |
 
 ### transacoes_limpo
 | Coluna | Tipo PBI | Descrição |
@@ -119,23 +125,29 @@ transacoes_limpo ◄──── [cliente_id] ──── clientes_limpo ──
 | `categoria_id` | Texto | FK para categorias_limpo |
 | `data` | Data | Data da transação |
 | `valor` | Número Decimal | Valor em R$ |
-| `tipo` | Texto | "debito" ou "credito" |
-| `canal` | Texto | Canal de origem |
+| `tipo` | Texto | "Debito", "Credito", "Pix", "Transferencia" |
+| `canal` | Texto | "App Mobile", "Internet Banking", "PIX", "Cartao", "Agencia" |
+| `descricao` | Texto | Descrição da transação |
+| `ano_mes` | Texto | Formato "YYYY-MM" |
+| `flag_outlier` | Número Inteiro | 1 se outlier detectado |
 
 ### categorias_limpo
 | Coluna | Tipo PBI | Descrição |
 |--------|----------|-----------|
 | `categoria_id` | Texto | ID da categoria |
 | `nome_categoria` | Texto | Nome legível |
-| `tipo_categoria` | Texto | Agrupamento |
+| `tipo_macro` | Texto | Agrupamento macro |
+| `descricao` | Texto | Descrição da categoria |
 
 ### predicoes_churn
 | Coluna | Tipo PBI | Descrição |
 |--------|----------|-----------|
 | `cliente_id` | Texto | FK para clientes_limpo |
 | `prob_churn` | Número Decimal | Probabilidade 0-1 |
-| `churn_flag` | Número Inteiro | 1 = churn previsto |
-| `risco` | Texto | "Alto", "Médio", "Baixo" |
+| `predicao_churn` | Número Inteiro | 1 = churn previsto pelo modelo |
+| `churn_real` | Número Inteiro | 1 = churn real (label original) |
+| `risco` | Texto | "Alto", "Medio", "Baixo" ⚠️ sem acento em "Medio" |
+| `recomendacao` | Texto | Ação de retenção sugerida |
 
 ### feature_importance
 | Coluna | Tipo PBI | Descrição |

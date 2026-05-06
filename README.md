@@ -15,6 +15,7 @@ A Aurora foi pensada para um hackathon de dados, mas com mentalidade de produto:
 - gera insumos para BI, storytelling e decisao
 - roda localmente sem backend obrigatorio
 - aceita base publica do Kaggle com fallback sintetico
+- permite upload local de CSV para uma analise expressa no navegador
 
 ## Problema de negocio
 
@@ -86,6 +87,8 @@ flowchart LR
     F --> G["CSV, JSON, model.pkl"]
     G --> H["Power BI"]
     G --> I["App React estatico"]
+    J["Upload local CSV"] --> K["Analise Expressa no navegador"]
+    K --> L["Dashboard dinamico client-side"]
 ```
 
 ## Como executar o pipeline
@@ -117,6 +120,35 @@ npm run dev
 cd app
 npm run build
 ```
+
+## Como usar o Upload de Planilha
+
+No frontend, acesse a aba `Analise Expressa` ou clique em `Suba sua planilha` na Landing Page.
+
+O recurso aceita CSV local com colunas no padrao Aurora ou nomes equivalentes do `Churn Modelling`. Exemplo disponivel em:
+
+- `app/public/examples/exemplo_clientes_upload.csv`
+
+Colunas recomendadas:
+
+- `cliente_id`
+- `idade`
+- `genero`
+- `estado`
+- `renda_mensal`
+- `saldo_atual`
+- `score_credito`
+- `produtos_ativos`
+- `membro_ativo`
+- `churn_flag`
+- `prob_churn`
+- `risco`
+
+Tambem sao reconhecidas colunas do Kaggle, como `CustomerId`, `Age`, `Gender`, `Geography`, `EstimatedSalary`, `Balance`, `CreditScore`, `NumOfProducts`, `IsActiveMember` e `Exited`.
+
+Privacidade: a planilha nao e enviada para servidor. Toda a leitura, normalizacao, score express, graficos e exportacao rodam localmente no navegador.
+
+Importante: se o CSV nao tiver `prob_churn`, o frontend calcula um score heuristico demonstrativo. O modelo oficial da Aurora continua sendo o `RandomForestClassifier` treinado pelo pipeline Python.
 
 ## Como rodar a inferencia separadamente
 
@@ -192,6 +224,8 @@ O guia pratico esta em:
 
 O `.pbix` pode ficar local ou entrar no repositorio se o tamanho permitir. Os screenshots devem entrar em `powerbi/screenshots/` como evidencia.
 
+O upload express do frontend e uma camada interativa complementar para demonstracao rapida. Ele nao substitui o Power BI oficial, que continua baseado nos CSVs e JSONs gerados pelo pipeline.
+
 ## Evidencias tecnicas
 
 - `dados/outputs/metricas_modelo.json`
@@ -212,6 +246,7 @@ O `.pbix` pode ficar local ou entrar no repositorio se o tamanho permitir. Os sc
 - comparar outros modelos sem overengineering
 - adicionar monitoramento de drift
 - publicar um `.pbix` final quando o tamanho permitir
+- evoluir upload XLSX no navegador caso o peso da dependencia seja aceitavel
 - conectar a API apenas se houver necessidade real
 
 ## Documentacao complementar
