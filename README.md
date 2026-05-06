@@ -1,97 +1,114 @@
 # Aurora Finance Intelligence
 
-**Dados que antecipam riscos, revelam padroes e apoiam decisoes financeiras mais humanas.**
+**Dados que antecipam riscos, revelam padrões e apoiam decisões financeiras mais humanas.**
 
-Aurora Finance Intelligence e uma solucao de dados ponta a ponta para analise financeira, risco e previsao de churn. O projeto combina pipeline em Python, SQL, Power BI, Machine Learning e um frontend React estatico com cara de produto real.
+Aurora Finance Intelligence é uma solução de dados ponta a ponta para análise financeira, risco e previsão de churn. O projeto combina pipeline em Python, SQL, Power BI, Machine Learning, app React estático e uma camada de Análise Expressa para upload local de CSV no navegador.
 
-Autoria: **Vitoria Freitas**
+Autoria: **Vitória Freitas**
 
-## O que e a Aurora
+## O Que É A Aurora
 
 A Aurora foi pensada para um hackathon de dados, mas com mentalidade de produto:
 
-- identifica sinais antecipados de churn
-- organiza comportamento financeiro e consumo
-- gera insumos para BI, storytelling e decisao
-- roda localmente sem backend obrigatorio
-- aceita base publica do Kaggle com fallback sintetico
-- permite upload local de CSV para uma analise expressa no navegador
+- Identifica sinais antecipados de churn.
+- Organiza comportamento financeiro, consumo e risco.
+- Gera insumos para BI, storytelling e decisão executiva.
+- Roda localmente sem backend obrigatório.
+- Usa dataset público do Kaggle com fallback sintético.
+- Permite upload local de CSV para uma análise expressa no navegador.
 
-## Problema de negocio
+## Problema De Negócio
 
-Empresas financeiras muitas vezes percebem tarde demais que um cliente esta prestes a reduzir relacionamento ou sair. Quando esse risco fica obvio, a janela de retencao ja diminuiu.
+Empresas financeiras muitas vezes percebem tarde demais que um cliente está prestes a reduzir relacionamento ou sair. Quando esse risco fica óbvio, a janela de retenção já diminuiu.
 
-A Aurora ajuda a agir antes, transformando sinais dispersos em fila de priorizacao para retencao.
+A Aurora ajuda a agir antes, transformando sinais dispersos em uma fila de priorização para retenção, com explicabilidade suficiente para apoiar decisões humanas, não automatizar decisões finais.
 
-## Dataset publico principal
+## Diferenciais
 
-O projeto foi adaptado para usar como base publica principal o dataset:
+- Dataset público `Churn Modelling` do Kaggle como base principal quando o CSV está disponível.
+- Fallback sintético para manter o projeto reprodutível mesmo sem arquivo Kaggle local.
+- Camada sintética de transações para viabilizar EDA, SQL, Power BI e storytelling.
+- Correção de risco de data leakage: as transações sintéticas não usam `Exited` para moldar comportamento transacional.
+- Modelo oficial em produção local com `RandomForestClassifier`, `model.pkl` e inferência separada.
+- Power BI preparado com `.pbix`, tema visual, medidas DAX, guia de montagem e screenshots reais.
+- App React premium, estático, responsivo e pronto para deploy gratuito.
+- Análise Expressa com upload local de CSV, sem backend e sem envio de arquivo para servidor.
+- Arquitetura premium free, AWS-ready e sem serviço cloud obrigatório.
+
+## Dataset Público Principal
+
+O projeto foi adaptado para usar como base pública principal o dataset:
 
 - `Churn Modelling`
-- plataforma: `Kaggle`
-- arquivo local esperado: `dados/raw/churn_modelling.csv`
+- Plataforma: `Kaggle`
+- Arquivo local esperado: `dados/raw/churn_modelling.csv`
 
-O projeto **nao faz download automatico do Kaggle**, porque isso exigiria autenticacao.
+O projeto **não faz download automático do Kaggle**, porque isso exigiria autenticação.
 
-## Como a base publica entra na solucao
+## Como A Base Pública Entra Na Solução
 
 Se `dados/raw/churn_modelling.csv` existir:
 
-- a Aurora carrega o dataset publico
-- usa `Exited` como target de churn
-- padroniza os campos para o schema interno
-- converte `EstimatedSalary` de salario anual para `renda_mensal`
-- usa `Geography` como localizacao
-- usa `Surname` como nome do cliente
-- marca `origem_dado = public_kaggle_churn_modelling`
+- A Aurora carrega o dataset público.
+- Usa `Exited` como target de churn.
+- Preserva o identificador original em `customer_id_original`.
+- Padroniza os campos para o schema interno.
+- Converte `EstimatedSalary` de salário anual estimado para `renda_mensal`.
+- Usa `Geography` como localização.
+- Usa `Surname` como nome/sobrenome do cliente.
+- Marca `origem_dado = public_kaggle_churn_modelling`.
 
-Se o arquivo nao existir:
+Se o arquivo não existir:
 
-- a Aurora usa o fallback sintetico
-- marca `origem_dado = synthetic_fallback`
-- `python -m src.pipeline` continua funcionando normalmente
+- A Aurora usa o fallback sintético.
+- Marca `origem_dado = synthetic_fallback`.
+- `python -m src.pipeline` continua funcionando normalmente.
 
-## Por que ainda existem transacoes sinteticas
+## Por Que Ainda Existem Transações Sintéticas
 
-O dataset `Churn Modelling` nao possui historico transacional por categoria. Por isso a Aurora adiciona uma **camada sintetica de transacoes financeiras** para viabilizar:
+O dataset `Churn Modelling` não possui histórico transacional por categoria. Por isso, a Aurora adiciona uma **camada sintética de transações financeiras** para viabilizar:
 
-- Python e estatistica exploratoria
-- SQL na pratica
-- Power BI
-- Machine Learning
-- storytelling executivo
+- Python e estatística exploratória.
+- SQL na prática.
+- Power BI.
+- Machine Learning.
+- Storytelling executivo.
 
-Essa camada e reprodutivel e coerente com `renda_mensal`, `saldo_atual`, `perfil_risco`, `membro_ativo` e `churn_flag`.
+Essa camada é reprodutível e coerente com `renda_mensal`, `saldo_atual`, `perfil_risco`, `membro_ativo` e `churn_flag`.
 
-No modo publico, as transacoes sinteticas sao geradas a partir de sinais de perfil e relacionamento, sem usar `Exited` para moldar o comportamento transacional. Isso reduz risco de data leakage na modelagem.
+No modo público, as transações sintéticas são geradas a partir de sinais de perfil e relacionamento, sem usar `Exited` para moldar o comportamento transacional. Isso reduz risco de data leakage na modelagem.
 
-## Requisitos do hackathon atendidos
+## Requisitos Do Hackathon Atendidos
 
-- `Python e estatistica exploratoria`: pipeline em `src/`, outputs em `dados/outputs/` e figuras em `reports/figuras/`
-- `SQL na pratica`: `sql/schema.sql` e `sql/queries_analiticas.sql`
-- `Power BI e storytelling`: `powerbi/README.md` e `docs/storytelling_powerbi.md`
-- `Machine Learning`: treino, metricas, threshold analysis e feature importance
-- `modelo em producao`: `modelo/model.pkl` e inferencia em `src/predict_churn.py`
-- `documentacao para GitHub`: README e docs complementares
-- `evidencias tecnicas`: CSVs, JSONs, notebooks, screenshots e modelo salvo
+- `Python e estatística exploratória`: pipeline em `src/`, outputs em `dados/outputs/` e figuras em `reports/figuras/`.
+- `SQL na prática`: `sql/schema.sql` e `sql/queries_analiticas.sql`.
+- `Power BI e storytelling`: `powerbi/README.md`, `docs/storytelling_powerbi.md`, `.pbix` e screenshots reais.
+- `Machine Learning`: treino, métricas, threshold analysis e feature importance.
+- `Modelo em produção`: `modelo/model.pkl` e inferência em `src/predict_churn.py`.
+- `Documentação para GitHub`: README e docs complementares.
+- `Evidências técnicas`: CSVs, JSONs, notebooks, screenshots, Power BI e modelo salvo.
 
 ## Arquitetura
 
 ```mermaid
 flowchart LR
-    A["Churn Modelling (Kaggle)<br/>ou fallback sintetico"] --> B["Padronizacao Aurora"]
-    B --> C["Camada sintetica de transacoes"]
+    A["Churn Modelling (Kaggle)<br/>ou fallback sintético"] --> B["Padronização Aurora"]
+    B --> C["Camada sintética de transações"]
     C --> D["Limpeza e EDA"]
     D --> E["SQL e Base de Modelagem"]
     E --> F["Random Forest + threshold analysis"]
     F --> G["CSV, JSON, model.pkl"]
     G --> H["Power BI"]
-    G --> I["App React estatico"]
-    J["Upload local CSV"] --> K["Analise Expressa no navegador"]
-    K --> L["Dashboard dinamico client-side"]
+    G --> I["App React estático"]
 ```
 
-## Como executar o pipeline
+A versão premium também possui uma rota opcional no frontend:
+
+```text
+Upload local CSV -> Análise Expressa no navegador -> Dashboard dinâmico client-side
+```
+
+## Como Executar O Pipeline
 
 ```powershell
 python -m venv .venv
@@ -106,7 +123,7 @@ Comando principal:
 python -m src.pipeline
 ```
 
-## Como executar o frontend
+## Como Executar O Frontend
 
 ```powershell
 cd app
@@ -114,16 +131,35 @@ npm install
 npm run dev
 ```
 
-## Como gerar build
+Acesse:
+
+- `http://localhost:5173/`
+
+## Como Testar A Análise Expressa
+
+```powershell
+cd app
+npm run dev
+```
+
+Abra no navegador:
+
+- `http://localhost:5173/#/upload-planilha`
+
+Use o arquivo de exemplo:
+
+- `app/public/examples/exemplo_clientes_upload.csv`
+
+## Como Gerar Build
 
 ```powershell
 cd app
 npm run build
 ```
 
-## Evidencia de execucao local
+## Evidência De Execução Local
 
-Os comandos abaixo foram validados localmente para demonstrar que o frontend roda sem backend e sem servicos pagos:
+Os comandos abaixo foram validados localmente para demonstrar que o frontend roda sem backend e sem serviços pagos:
 
 ```powershell
 cd app
@@ -136,9 +172,9 @@ npm run dev
 # Local: http://localhost:5173/
 ```
 
-## Preview do produto
+## Preview Do Produto
 
-A Aurora tambem entrega uma interface React estatica com visual de produto SaaS premium. Os prints abaixo foram gerados localmente a partir do app e servem como evidencia visual para GitHub e banca.
+A Aurora também entrega uma interface React estática com visual de produto SaaS premium. Os prints abaixo foram gerados localmente a partir do app e servem como evidência visual para GitHub e banca.
 
 ### Landing Page
 
@@ -148,30 +184,45 @@ A Aurora tambem entrega uma interface React estatica com visual de produto SaaS 
 
 <img src="reports/screenshots/app/02_dashboard_executivo.png" alt="Dashboard Executivo da Aurora Finance Intelligence" width="100%">
 
-### Clientes em Risco
+### Clientes Em Risco
 
 <img src="reports/screenshots/app/04_clientes_em_risco.png" alt="Tabela de clientes em risco da Aurora Finance Intelligence" width="100%">
 
 ### ML Insights
 
-<img src="reports/screenshots/app/03_ml_insights.png" alt="Pagina de ML Insights com metricas e feature importance" width="100%">
+<img src="reports/screenshots/app/03_ml_insights.png" alt="Página de ML Insights com métricas e feature importance" width="100%">
 
-### Analise Expressa
+### Análise Expressa
 
-<img src="reports/screenshots/app/07_analise_expressa.png" alt="Upload de planilha e analise expressa no navegador" width="100%">
+<img src="reports/screenshots/app/07_analise_expressa.png" alt="Upload de planilha e análise expressa no navegador" width="100%">
 
-### Arquitetura e Power BI Guide
+### Arquitetura E Power BI Guide
 
 <p>
-  <img src="reports/screenshots/app/05_arquitetura.png" alt="Pagina de arquitetura da Aurora Finance Intelligence" width="49%">
-  <img src="reports/screenshots/app/06_power_bi_guide.png" alt="Pagina Power BI Guide da Aurora Finance Intelligence" width="49%">
+  <img src="reports/screenshots/app/05_arquitetura.png" alt="Página de arquitetura da Aurora Finance Intelligence" width="49%">
+  <img src="reports/screenshots/app/06_power_bi_guide.png" alt="Página Power BI Guide da Aurora Finance Intelligence" width="49%">
 </p>
 
-## Como usar o Upload de Planilha
+## Análise Expressa: Suba Sua Planilha
 
-No frontend, acesse a aba `Analise Expressa` ou clique em `Suba sua planilha` na Landing Page.
+O frontend possui uma aba chamada `Análise Expressa`, criada para demonstrar valor de produto sem backend, sem banco e sem serviços pagos.
 
-O recurso aceita CSV local com colunas no padrao Aurora ou nomes equivalentes do `Churn Modelling`. Exemplo disponivel em:
+O usuário pode subir um CSV local de clientes com colunas no padrão Aurora ou com nomes equivalentes ao `Churn Modelling`. A planilha é processada localmente no navegador: nenhum arquivo é enviado para servidor.
+
+A análise gera automaticamente:
+
+- KPIs de clientes, churn observado, risco alto e probabilidade média.
+- Distribuição de risco.
+- Risco médio por estado.
+- Gráfico por faixa de score de crédito.
+- Tabela de clientes prioritários para retenção.
+- Exportação da análise com `cliente_id`, `prob_churn`, `risco` e `recomendacao`.
+
+Se o CSV não tiver `prob_churn`, o frontend calcula um score express heurístico apenas para demonstração. Esse score considera sinais como score de crédito baixo, inatividade, quantidade de produtos, renda e saldo. Ele **não substitui** o modelo oficial.
+
+O modelo oficial da Aurora continua sendo o `RandomForestClassifier` treinado pelo pipeline Python, salvo em `modelo/model.pkl` e aplicado em `src/predict_churn.py`.
+
+Arquivo de exemplo para teste:
 
 - `app/public/examples/exemplo_clientes_upload.csv`
 
@@ -190,15 +241,11 @@ Colunas recomendadas:
 - `prob_churn`
 - `risco`
 
-Tambem sao reconhecidas colunas do Kaggle, como `CustomerId`, `Age`, `Gender`, `Geography`, `EstimatedSalary`, `Balance`, `CreditScore`, `NumOfProducts`, `IsActiveMember` e `Exited`.
+Também são reconhecidas colunas do Kaggle, como `CustomerId`, `Age`, `Gender`, `Geography`, `EstimatedSalary`, `Balance`, `CreditScore`, `NumOfProducts`, `IsActiveMember` e `Exited`.
 
-Privacidade: a planilha nao e enviada para servidor. Toda a leitura, normalizacao, score express, graficos e exportacao rodam localmente no navegador.
+## Como Rodar A Inferência Separadamente
 
-Importante: se o CSV nao tiver `prob_churn`, o frontend calcula um score heuristico demonstrativo. O modelo oficial da Aurora continua sendo o `RandomForestClassifier` treinado pelo pipeline Python.
-
-## Como rodar a inferencia separadamente
-
-Se o modelo ja tiver sido treinado:
+Se o modelo já tiver sido treinado:
 
 ```powershell
 python -m src.predict_churn
@@ -206,7 +253,7 @@ python -m src.predict_churn
 
 Esse comando reaplica o `modelo/model.pkl` na base de modelagem atual e atualiza `dados/outputs/predicoes_churn.csv`.
 
-## Outputs obrigatorios
+## Outputs Obrigatórios
 
 O pipeline gera e preserva os artefatos principais:
 
@@ -224,18 +271,18 @@ O pipeline gera e preserva os artefatos principais:
 - `app/public/data/summary.json`
 - `app/public/data/threshold_analysis.json`
 
-O projeto tambem preserva os nomes antigos de apoio:
+O projeto também preserva os nomes antigos de apoio:
 
 - `dados/processed/clientes_tratados.csv`
 - `dados/processed/transacoes_tratadas.csv`
 - `dados/processed/categorias_tratadas.csv`
 - `dados/processed/base_analitica_clientes.csv`
 
-## Machine Learning e defesa de banca
+## Machine Learning E Defesa De Banca
 
-O modelo principal e um `RandomForestClassifier` com `class_weight="balanced"`.
+O modelo principal é um `RandomForestClassifier` com `class_weight="balanced"`.
 
-As metricas nao ficam fixas no README. Os valores atualizados de cada execucao ficam em:
+As métricas não ficam fixas no README. Os valores atualizados de cada execução ficam em:
 
 - `dados/outputs/metricas_modelo.json`
 
@@ -249,46 +296,52 @@ Esse arquivo registra, entre outros:
 - `baseline_churn_rate`
 - `threshold_used`
 
-O projeto tambem compara thresholds em:
+O projeto também compara thresholds em:
 
 - `dados/outputs/threshold_analysis.csv`
 
 Como defender o modelo:
 
-- `precision` mostra a qualidade dos alertas
-- `recall` mostra a capacidade de capturar clientes que poderiam sair
-- `roc_auc` mostra a capacidade de ranquear risco
-- em churn, falso negativo importa
-- o MVP usa ranking de risco e priorizacao, nao decisao automatica
+- `precision` mostra a qualidade dos alertas.
+- `recall` mostra a capacidade de capturar clientes que poderiam sair.
+- `roc_auc` mostra a capacidade de ranquear risco.
+- Em churn, falso negativo importa porque representa cliente em risco não acionado.
+- O MVP usa ranking de risco e priorização, não decisão automática.
 
 ## Power BI
 
-O guia pratico esta em:
+O guia prático está em:
 
 - [powerbi/README.md](powerbi/README.md)
 - [docs/storytelling_powerbi.md](docs/storytelling_powerbi.md)
 
-O `.pbix` pode ficar local ou entrar no repositorio se o tamanho permitir. Os screenshots devem entrar em `powerbi/screenshots/` como evidencia.
+O `.pbix` está no repositório em:
 
-O upload express do frontend e uma camada interativa complementar para demonstracao rapida. Ele nao substitui o Power BI oficial, que continua baseado nos CSVs e JSONs gerados pelo pipeline.
+- `powerbi/aurora_finance_intelligence.pbix`
 
-### Preview do Power BI
+Os screenshots reais do painel estão em:
 
-Os prints abaixo mostram o painel executivo montado no Power BI Desktop, com as 5 paginas previstas no roteiro de BI.
+- `powerbi/screenshots/`
 
-| Visao Executiva | Consumo e Comportamento |
+O upload express do frontend é uma camada interativa complementar para demonstração rápida. Ele não substitui o Power BI oficial, que continua baseado nos CSVs e JSONs gerados pelo pipeline.
+
+### Preview Do Power BI
+
+Os prints abaixo mostram o painel executivo montado no Power BI Desktop, com as 5 páginas previstas no roteiro de BI.
+
+| Visão Executiva | Consumo E Comportamento |
 |---|---|
-| <img src="powerbi/screenshots/01_visao_executiva.png" alt="Power BI - Visao Executiva" width="100%"> | <img src="powerbi/screenshots/02_consumo_comportamento.png" alt="Power BI - Consumo e Comportamento Financeiro" width="100%"> |
+| <img src="powerbi/screenshots/01_visao_executiva.png" alt="Power BI - Visão Executiva" width="100%"> | <img src="powerbi/screenshots/02_consumo_comportamento.png" alt="Power BI - Consumo e Comportamento Financeiro" width="100%"> |
 
-| Churn e Retencao | Modelo ML |
+| Churn E Retenção | Modelo ML |
 |---|---|
-| <img src="powerbi/screenshots/03_churn_retencao.png" alt="Power BI - Churn e Retencao" width="100%"> | <img src="powerbi/screenshots/04_modelo_ml.png" alt="Power BI - Modelo Machine Learning" width="100%"> |
+| <img src="powerbi/screenshots/03_churn_retencao.png" alt="Power BI - Churn e Retenção" width="100%"> | <img src="powerbi/screenshots/04_modelo_ml.png" alt="Power BI - Modelo Machine Learning" width="100%"> |
 
 | Storytelling Executivo |
 |---|
 | <img src="powerbi/screenshots/05_storytelling_executivo.png" alt="Power BI - Storytelling Executivo" width="100%"> |
 
-## Evidencias tecnicas
+## Evidências Técnicas
 
 - `dados/outputs/metricas_modelo.json`
 - `dados/outputs/predicoes_churn.csv`
@@ -302,20 +355,23 @@ Os prints abaixo mostram o painel executivo montado no Power BI Desktop, com as 
 - `app/public/data/`
 - `modelo/model.pkl`
 - `powerbi/screenshots/`
+- `powerbi/aurora_finance_intelligence.pbix`
 
-## Evolucao futura
+## Evolução Futura
 
-- calibrar threshold com meta operacional real
-- comparar outros modelos sem overengineering
-- adicionar monitoramento de drift
-- publicar um `.pbix` final quando o tamanho permitir
-- evoluir upload XLSX no navegador caso o peso da dependencia seja aceitavel
-- conectar a API apenas se houver necessidade real
+- Calibrar threshold com meta operacional real.
+- Comparar outros modelos sem overengineering.
+- Adicionar monitoramento de drift.
+- Evoluir upload XLSX no navegador caso o peso da dependência seja aceitável.
+- Conectar API apenas se houver necessidade real.
+- Publicar a versão estática em S3 Static Website ou AWS Amplify com controle de custo.
 
-## Documentacao complementar
+## Documentação Complementar
 
 - [docs/dataset_publico.md](docs/dataset_publico.md)
 - [docs/dicionario_dados.md](docs/dicionario_dados.md)
 - [docs/arquitetura_solucao.md](docs/arquitetura_solucao.md)
 - [docs/storytelling_powerbi.md](docs/storytelling_powerbi.md)
 - [docs/perguntas_banca.md](docs/perguntas_banca.md)
+- [docs/deploy_aws_free.md](docs/deploy_aws_free.md)
+- [docs/auditoria_final.md](docs/auditoria_final.md)

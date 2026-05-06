@@ -612,7 +612,7 @@ function Landing({
             <div className="space-y-5">
               <InsightRow label="Volume total transacionado" value={formatCurrency(summary.volume_total)} />
               <InsightRow label="Ticket médio da base" value={formatCurrency(summary.ticket_medio)} />
-              <InsightRow label="Taxa de churn simulada" value={formatPercent(summary.churn_rate_real)} />
+              <InsightRow label="Taxa de churn da base" value={formatPercent(summary.churn_rate_real)} />
             </div>
           </div>
 
