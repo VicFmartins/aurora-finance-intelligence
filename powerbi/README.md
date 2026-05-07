@@ -176,6 +176,7 @@ Ver todas as medidas em `medidas_dax.md`.
 Após montar cada página, pressione `Win + Shift + S` e salve em `powerbi/screenshots/`:
 
 ```
+powerbi/screenshots/00_pagina_inicial.png
 powerbi/screenshots/01_visao_executiva.png
 powerbi/screenshots/02_consumo_comportamento.png
 powerbi/screenshots/03_churn_retencao.png
@@ -193,6 +194,7 @@ Os prints finais do painel ja estao salvos como evidencia visual da camada de BI
 
 | Pagina | Screenshot |
 |--------|------------|
+| Pagina Inicial | `powerbi/screenshots/00_pagina_inicial.png` |
 | Visao Executiva | `powerbi/screenshots/01_visao_executiva.png` |
 | Consumo e Comportamento Financeiro | `powerbi/screenshots/02_consumo_comportamento.png` |
 | Churn e Retencao | `powerbi/screenshots/03_churn_retencao.png` |
@@ -209,11 +211,11 @@ Esses arquivos podem ser usados no README do GitHub, na apresentacao e como comp
 - [ ] 8 fontes importadas (7 CSV + 1 JSON)
 - [ ] 3 relacionamentos criados corretamente no modelo
 - [ ] Tabela `_Medidas` com todas as medidas DAX
-- [ ] 5 páginas criadas e nomeadas
+- [ ] 6 páginas criadas e nomeadas
 - [ ] Segmentadores sincronizados entre páginas
 - [ ] Títulos preenchidos em cada visual
 - [ ] Cards KPI validados com os números reais
-- [ ] 5 screenshots tirados e salvos em `powerbi/screenshots/`
+- [ ] 6 screenshots tirados e salvos em `powerbi/screenshots/`
 - [ ] Arquivo salvo como `powerbi/aurora_finance_intelligence.pbix`
 
 ---

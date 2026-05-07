@@ -81,6 +81,7 @@ Arquivos principais:
 - `powerbi/medidas_dax.md`
 - `powerbi/layout_dashboard.md`
 - `powerbi/tema_aurora.json`
+- `powerbi/screenshots/00_pagina_inicial.png`
 - `powerbi/screenshots/01_visao_executiva.png`
 - `powerbi/screenshots/02_consumo_comportamento.png`
 - `powerbi/screenshots/03_churn_retencao.png`

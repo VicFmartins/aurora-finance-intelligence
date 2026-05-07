@@ -350,19 +350,19 @@ O upload express do frontend é uma camada interativa complementar para demonstr
 
 ### Preview Do Power BI
 
-Os prints abaixo mostram o painel executivo montado no Power BI Desktop, com as 5 páginas previstas no roteiro de BI.
+Os prints abaixo mostram o painel executivo montado no Power BI Desktop, com página inicial e as 5 páginas previstas no roteiro de BI.
 
-| Visão Executiva | Consumo E Comportamento |
+| Página Inicial | Visão Executiva |
 |---|---|
-| <img src="powerbi/screenshots/01_visao_executiva.png" alt="Power BI - Visão Executiva" width="100%"> | <img src="powerbi/screenshots/02_consumo_comportamento.png" alt="Power BI - Consumo e Comportamento Financeiro" width="100%"> |
+| <img src="powerbi/screenshots/00_pagina_inicial.png" alt="Power BI - Página Inicial" width="100%"> | <img src="powerbi/screenshots/01_visao_executiva.png" alt="Power BI - Visão Executiva" width="100%"> |
 
-| Churn E Retenção | Modelo ML |
+| Consumo E Comportamento | Churn E Retenção |
 |---|---|
-| <img src="powerbi/screenshots/03_churn_retencao.png" alt="Power BI - Churn e Retenção" width="100%"> | <img src="powerbi/screenshots/04_modelo_ml.png" alt="Power BI - Modelo Machine Learning" width="100%"> |
+| <img src="powerbi/screenshots/02_consumo_comportamento.png" alt="Power BI - Consumo e Comportamento Financeiro" width="100%"> | <img src="powerbi/screenshots/03_churn_retencao.png" alt="Power BI - Churn e Retenção" width="100%"> |
 
-| Storytelling Executivo |
-|---|
-| <img src="powerbi/screenshots/05_storytelling_executivo.png" alt="Power BI - Storytelling Executivo" width="100%"> |
+| Modelo ML | Storytelling Executivo |
+|---|---|
+| <img src="powerbi/screenshots/04_modelo_ml.png" alt="Power BI - Modelo Machine Learning" width="100%"> | <img src="powerbi/screenshots/05_storytelling_executivo.png" alt="Power BI - Storytelling Executivo" width="100%"> |
 
 ## Evidências Técnicas
 
