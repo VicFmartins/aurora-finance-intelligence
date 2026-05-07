@@ -17,6 +17,8 @@
 6. No Editor do Power Query, aplique as transformações abaixo
 7. Ao terminar todos, clique em **Fechar e Aplicar**
 
+> **Localidade obrigatória:** para colunas decimais, use **Inglês (EUA)**. Os CSVs usam ponto (`.`) como separador decimal. Não use localidade Brasil para números decimais, porque isso pode transformar valores financeiros e probabilidades em erro ou texto.
+
 ---
 
 ## 2. Transformações por tabela
@@ -67,7 +69,7 @@ No Power Query, selecione a coluna e aplique o tipo correto via **Transformar �
     {"data_cadastro", type date},
     {"churn_flag", Int64.Type},
     {"origem_dado", type text}
-})
+}, "en-US")
 ```
 
 ---
@@ -100,7 +102,7 @@ No Power Query, selecione a coluna e aplique o tipo correto via **Transformar �
     {"canal", type text},
     {"ano_mes", type text},
     {"flag_outlier", Int64.Type}
-})
+}, "en-US")
 ```
 
 > **Atenção:** Se `data` não converter corretamente, use: **Transformar → Coluna de Data → Usando Localidade → Inglês (EUA)** para formato YYYY-MM-DD.
@@ -122,7 +124,7 @@ No Power Query, selecione a coluna e aplique o tipo correto via **Transformar �
     {"nome_categoria", type text},
     {"tipo_macro", type text},
     {"descricao", type text}
-})
+}, "en-US")
 ```
 
 ---
@@ -160,7 +162,7 @@ No Power Query, selecione a coluna e aplique o tipo correto via **Transformar �
     {"predicao_churn", Int64.Type},
     {"risco", type text},
     {"recomendacao", type text}
-})
+}, "en-US")
 ```
 
 ---
@@ -176,7 +178,7 @@ No Power Query, selecione a coluna e aplique o tipo correto via **Transformar �
 = Table.TransformColumnTypes(#"Etapa anterior", {
     {"feature", type text},
     {"importance", type number}
-})
+}, "en-US")
 ```
 
 ---
@@ -202,7 +204,7 @@ No Power Query, selecione a coluna e aplique o tipo correto via **Transformar �
     {"f1_score", type number},
     {"alert_rate", type number},
     {"retention_score", type number}
-})
+}, "en-US")
 ```
 
 ---
@@ -243,7 +245,7 @@ let
     ParaTabela = Record.ToTable(Fonte),
     RenomearColunas = Table.RenameColumns(ParaTabela, {{"Name", "metrica"}, {"Value", "valor"}}),
     FiltrarNumericos = Table.SelectRows(RenomearColunas, each Value.Is([valor], type number)),
-    ConverterTipo = Table.TransformColumnTypes(FiltrarNumericos, {{"valor", type number}})
+    ConverterTipo = Table.TransformColumnTypes(FiltrarNumericos, {{"valor", type number}}, "en-US")
 in
     ConverterTipo
 ```

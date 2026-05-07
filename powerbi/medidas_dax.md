@@ -1,16 +1,17 @@
 # Medidas DAX - Aurora Finance Intelligence
 
-> Como usar: no Power BI Desktop, va em **Modelagem > Nova medida** e cole cada formula abaixo.
-> Padrao adotado: nomes de medidas em minusculo, sem acento e com `_` separando as palavras.
+> Como usar: no Power BI Desktop, vá em **Modelagem > Nova medida** e cole cada fórmula abaixo.
+> Padrão adotado: nomes de medidas em minúsculo, sem acento e com `_` separando as palavras.
 
-## Observacoes importantes
+## Observações importantes
 
-- Os CSVs processados usam colunas em portugues, como `churn_flag`, `renda_mensal`, `saldo_atual` e `tempo_relacionamento`.
+- Os CSVs processados usam colunas em português, como `churn_flag`, `renda_mensal`, `saldo_atual` e `tempo_relacionamento`.
 - A coluna `transacoes_limpo[tipo]` usa os valores `Debito`, `Credito`, `Pix` e `Transferencia`.
 - A coluna `predicoes_churn[risco]` usa `Alto`, `Medio` e `Baixo`. O valor `Medio` fica sem acento.
 - A tabela `metricas_modelo` deve ser importada do JSON como duas colunas: `metrica` e `valor`.
+- Todas as medidas abaixo usam nomes técnicos em minúsculo e com `_`. Evite recriar medidas antigas com nomes como `Clientes Ativos`, `Total Gastos`, `Média de Renda Mensal` ou colunas originais do Kaggle (`Exited`, `Balance`, `EstimatedSalary`).
 
-## 1. Visao geral
+## 1. Visão geral
 
 ### total_clientes
 ```dax
@@ -130,9 +131,9 @@ media_produtos_por_cliente =
 AVERAGE(clientes_limpo[produtos_ativos])
 ```
 
-### percentual_clientes_com_cartao
+### clientes_com_cartao_pct
 ```dax
-percentual_clientes_com_cartao =
+clientes_com_cartao_pct =
 DIVIDE(
     CALCULATE(
         COUNTROWS(clientes_limpo),
@@ -143,9 +144,9 @@ DIVIDE(
 )
 ```
 
-### percentual_membros_ativos
+### membros_ativos_pct
 ```dax
-percentual_membros_ativos =
+membros_ativos_pct =
 DIVIDE(
     CALCULATE(
         COUNTROWS(clientes_limpo),
@@ -162,7 +163,7 @@ meta_saldo =
 0
 ```
 
-> Ajuste `meta_saldo` se a banca pedir uma meta operacional. Para a demo, manter zero deixa claro que o indicador mede saldo liquido observado.
+> Meta usada na demo: `0`. Ajuste `meta_saldo` apenas se a banca ou a área de negócio definir uma meta operacional. Com zero, `variacao_saldo` mede o saldo líquido observado em relação ao ponto neutro.
 
 ### variacao_saldo
 ```dax
@@ -446,8 +447,7 @@ SWITCH(
 
 | Medida | Formato no Power BI |
 | --- | --- |
-| `taxa_churn`, `probabilidade_media_churn`, `precision_modelo`, `recall_modelo`, `baseline_churn_rate` | Porcentagem |
-| `roc_auc`, `f1_score_modelo`, `accuracy_modelo`, `threshold_usado` | Numero decimal |
+| `taxa_churn`, `probabilidade_media_churn`, `precision_modelo`, `recall_modelo`, `baseline_churn_rate`, `clientes_com_cartao_pct`, `membros_ativos_pct` | Porcentagem |
+| `roc_auc`, `f1_score_modelo`, `accuracy_modelo`, `threshold_usado` | Número decimal |
 | `volume_financeiro`, `saldo_liquido`, `ticket_medio`, `media_renda_mensal` | Moeda |
-| `total_clientes`, `total_transacoes`, `clientes_alto_risco` | Numero inteiro |
-
+| `total_clientes`, `total_transacoes`, `clientes_alto_risco` | Número inteiro |
